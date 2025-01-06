@@ -19,15 +19,32 @@ https://github.com/IceColaZhang/DataCombine.git
 
 （1）主数据库 (master)：用于记录同步的中间数据，配置如下：
 
-	表名： t_base_data_sync
+	-- 表名：
+	
+	t_base_data_sync
 
-	字段说明：
+	-- 字段说明：
 
 	row_id：业务表的主键。
+	
+	table_name:业务表名。
 
 	msg：同步信息，包含同步条数、报错信息及同步耗时。
+	
+	is_delete_id：标识为1时，删除源端表主键（适用于目标端表主键递增的情况）
 
 	last_update_time：记录最新的同步时间。
+	
+	-- 建表语句：
+		CREATE TABLE `t_base_data_sync` (
+ 		 `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  		`row_id` bigint(20) DEFAULT NULL COMMENT '业务表主键',
+  		`table_name` varchar(255) DEFAULT NULL COMMENT '业务表名',
+  		`last_update_time` datetime DEFAULT NULL COMMENT '最近更新时间',
+  		`msg` text COMMENT '错误日志',
+  		`is_delete_id` varchar(1) DEFAULT NULL COMMENT '是否删除主键',
+  		PRIMARY KEY (`id`) USING BTREE
+		) ENGINE=InnoDB AUTO_INCREMENT=140 DEFAULT CHARSET=utf8mb4 COMMENT='数据同步中间表';
 
 （2）源端数据库 (slave)：用于存储需要同步的原始数据。
 
@@ -56,7 +73,9 @@ https://github.com/IceColaZhang/DataCombine.git
       driver-class-name: com.mysql.cj.jdbc.Driver
 
 ## 使用说明
-配置无误后，调用控制层DataSyncController中的接口syncData（/dataSync/syncData）
+1.向中间表（t_base_data_sync）中初始数据，tabl_name为需要同步的表名，row_id统一更新为0,若需要在同步时删除源端表主键，则将is_delete_id字段标识为1
+
+2.配置无误后，调用控制层DataSyncController中的接口syncData（/dataSync/syncData）
 
 ## 注意事项
 1、请确保 application.yml 文件中配置的数据库信息正确无误。
