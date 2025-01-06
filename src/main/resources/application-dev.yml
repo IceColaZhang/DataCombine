@@ -1,0 +1,76 @@
+############################## 可视化设计器配置 开始  ##############################
+hussar-formdesign:
+  workspace: D:\xzsbgxpt
+  java-path: /com/jxdinfo/hussar/example
+  front-project-path: \front
+  back-project-path: \back
+
+spring:
+  ###################  MySQL数据库配置  ###################
+  datasource:
+    druid:
+      stat-view-servlet:
+        enabled: true
+        loginUsername: admin
+        loginPassword: 123456
+        allow: ''
+    dynamic:
+      primary: master
+      strict: true
+      druid: # 全局druid参数，绝大部分值和默认保持一致。(现已支持的参数如下,不清楚含义不要乱设置)
+        initial-size: 1
+        min-idle: 1
+        maxActive: 30
+        maxWait: 30000
+        removeAbandoned: false
+        logAbandoned: true
+        timeBetweenEvictionRunsMillis: 30000
+        maxEvictableIdleTimeMillis: 180000
+        minEvictableIdleTimeMillis: 60000
+        phyTimeoutMillis: 3600000
+        testOnBorrow: false
+        testOnReturn: false
+        testWhileIdle: true
+        validationQuery: SELECT 1
+        keepAlive: true
+        filters: stat,slf4j
+        connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
+        removeAbandonedTimeoutMillis: 1800000
+      datasource:
+        master:
+          url: jdbc:mysql://10.0.7.9:3396/xzsbgxpt?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useTimezone=true&serverTimezone=GMT%2B8&allowMultiQueries=true
+          username: root
+          password: root
+          db-name: xzsbgxpt
+          driver-class-name: com.mysql.cj.jdbc.Driver
+        slave:
+          url: jdbc:mysql://10.0.8.105:3306/mom-kpi?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useTimezone=true&serverTimezone=GMT%2B8&allowMultiQueries=true&rewriteBatchedStatements=true
+          username: dev_r
+          password: readonly123
+          db-name: mom-kpi
+          driver-class-name: com.mysql.cj.jdbc.Driver
+        base:
+          url: jdbc:mysql://10.0.8.106:3306/mom-kpi-sit?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useTimezone=true&serverTimezone=GMT%2B8&allowMultiQueries=true&rewriteBatchedStatements=true
+          username: admin
+          password: mdadmin@2024
+          db-name: mom-kpi-sit
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          druid: # 全局druid参数，绝大部分值和默认保持一致。(现已支持的参数如下,不清楚含义不要乱设置)
+            initial-size: 1
+            min-idle: 1
+            maxActive: 30
+            maxWait: 30000
+            removeAbandoned: false
+            logAbandoned: true
+            timeBetweenEvictionRunsMillis: 30000
+            maxEvictableIdleTimeMillis: 180000
+            minEvictableIdleTimeMillis: 60000
+            phyTimeoutMillis: 3600000
+            testOnBorrow: false
+            testOnReturn: false
+            testWhileIdle: true
+            validationQuery: SELECT 1
+            keepAlive: true
+            filters: stat,slf4jy
+            connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
+            removeAbandonedTimeoutMillis: 1800000

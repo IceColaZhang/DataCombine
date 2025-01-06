@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jxdinfo.hussar.example.dao.CommonMapper">
+
+    <insert id="insertData" parameterType="map">
+        INSERT INTO ${tableName} (
+        <foreach collection="mappingFields" item="mappingField" separator=",">
+            ${mappingField}
+        </foreach>
+        )
+        VALUES
+        <foreach collection="insertDates" item="insertDateList" separator=",">
+            (
+            <foreach collection="insertDateList" item="insertDate" separator=",">
+                #{insertDate}
+            </foreach>
+            )
+        </foreach>
+    </insert>
+
+
+
+
+
+
+
+    <select id="executeSelect" parameterType="map" resultType="map">
+        SELECT *
+        FROM ${tableName}
+        <where>
+            <if test="conditions != null and conditions != ''">
+                ${conditions}
+            </if>
+        </where>
+    </select>
+</mapper>
